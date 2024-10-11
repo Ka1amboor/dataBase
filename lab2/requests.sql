@@ -75,7 +75,7 @@ AND contracts.date_of_conclusion BETWEEN '2023-01-01' AND '2023-12-31';
 --5. Вывести депозиты с условиями, попадающими в указанные границы.
 SELECT product_id, type, conditions, bet
 FROM FinancialProducts
-WHERE тип = 'Депозиты' AND bet BETWEEN 4.0 AND 6.0;
+WHERE type = 'Депозиты' AND bet::numeric BETWEEN 4.0 AND 6.0;
 
 --6. Рассчитать общую сумму всех договоров для каждого клиента и записать результаты.
 CREATE TABLE TotalSumContracts AS
