@@ -131,15 +131,10 @@ LIMIT 5 OFFSET 2;
 
 
 --13. Подсчитайте среднюю сумму депозитов для каждого клиента и запишите результаты.!!!!!
-CREATE TABLE AverageDeposits AS
-SELECT client_id, AVG(сумма) AS avg_deposit
+SELECT client_id, AVG(total_sum::numeric) AS average_deposit
 FROM Contracts
-WHERE product_id IN (
-    SELECT product_id
-    FROM FinancialProducts
-    WHERE тип = 'Депозиты'
-)
 GROUP BY client_id;
+
 
 --14. Отсортируйте договора по дате их заключения, используя только данные из одной таблицы.
 SELECT contract_id, client_id, product_id, дата заключения, сумма
