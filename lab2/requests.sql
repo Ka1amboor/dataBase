@@ -115,12 +115,12 @@ WHERE date_of_conclusion < (CURRENT_DATE - INTERVAL '1 year');
 
 
 --11. Найдите договора по кредитам с определёнными условиями.!!!!!!!!
-SELECT contract_id, client_id, product_id, data, total_sum
+SELECT contract_id, client_id, product_id, date_of_conclusion , total_sum
 FROM Contracts
 WHERE product_id IN (
     SELECT product_id
     FROM FinancialProducts
-    WHERE тип = 'Кредиты' AND ставка < 12.0
+    WHERE type = 'Кредиты' AND bet::numeric < 12.0
 );
 
 --12. Выведите первые пять записей о заключённых договорах, пропустив несколько первых записей.
