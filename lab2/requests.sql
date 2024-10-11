@@ -25,10 +25,15 @@ CREATE TABLE Contracts (
     total_sum FLOAT
 );
 
+    --Изменение таблиц:
    -- Изменение имени столбца я некорректно указала имя аттрибута
    ALTER TABLE contracts 
    RENAME COLUMN data TO date_of_conclusion;
-   
+    -- Изменение типа данных аттрибута
+    ALTER TABLE contracts 
+    ALTER COLUMN total_sum TYPE money 
+    USING (total_sum::numeric::money);
+
 
 
 --
