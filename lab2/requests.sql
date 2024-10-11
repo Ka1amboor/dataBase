@@ -34,6 +34,12 @@ CREATE TABLE Contracts (
     ALTER COLUMN total_sum TYPE money 
     USING (total_sum::numeric::money);
 
+    -- Изменение типа данных аттрибута
+    ALTER TABLE financialproducts 
+    ALTER COLUMN bet TYPE money 
+    USING (bet::numeric::money);
+
+
 
 
 --
