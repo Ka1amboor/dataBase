@@ -97,14 +97,12 @@ WHERE type = 'Депозиты' AND bet::numeric BETWEEN 4.0 AND 6.0;
 --создание новой таблицы?
 
 --8.Выведите клиентов, которые заключили договора на сумму, превышающую определённое значение.
-SELECT client_id, name, surname, address, phone_number, email
-FROM Clients
-WHERE client_id IN (
-    SELECT client_id
-    FROM Contracts
-    GROUP BY client_id
-    HAVING SUM(total_sum) > 2000000
-);
+SELECT c.client_id, c.name, c.surname, c.address, c.phone_number, c.email
+FROM Clients c, Contracts ct
+WHERE c.client_id = ct.client_id
+GROUP BY c.client_id, c.name, c.surname, c.address, c.phone_number, c.email
+HAVING SUM(ct.total_sum::numeric) > 1000000;
+
 
 --9. Обновите условия депозитов для одного из типов финансовых продуктов.
 UPDATE FinancialProducts
