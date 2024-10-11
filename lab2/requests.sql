@@ -78,12 +78,10 @@ FROM FinancialProducts
 WHERE type = 'Депозиты' AND bet::numeric BETWEEN 4.0 AND 6.0;
 
 --6. Рассчитать общую сумму всех договоров для каждого клиента и записать результаты.
----
+--- создание новой таблицы?
 
 --7.Определите, сколько договоров было заключено по каждому типу финансовых продуктов.!!!!!
-CREATE TABLE NumContractsByProduct AS
-SELECT product_id, (SELECT COUNT(*) FROM Contracts WHERE Contracts.product_id = FinancialProducts.product_id) AS num_contracts
-FROM FinancialProducts;
+--создание новой таблицы?
 
 --8.Выведите клиентов, которые заключили договора на сумму, превышающую определённое значение.
 SELECT client_id, name, surname, address, phone_number, email
