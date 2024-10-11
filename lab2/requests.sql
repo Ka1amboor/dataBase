@@ -25,6 +25,12 @@ CREATE TABLE Contracts (
     total_sum FLOAT
 );
 
+   -- Изменение имени столбца я некорректно указала имя аттрибута
+   ALTER TABLE contracts 
+   RENAME COLUMN data TO date_of_conclusion;
+   
+
+
 --
 
 -- Заполнение таблицы клиентов
