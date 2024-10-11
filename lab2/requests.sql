@@ -137,9 +137,9 @@ GROUP BY client_id;
 
 
 --14. Отсортируйте договора по дате их заключения, используя только данные из одной таблицы.
-SELECT contract_id, client_id, product_id, дата заключения, сумма
+SELECT contract_id, client_id, product_id, date_of_conclusion , total_sum 
 FROM Contracts
-ORDER BY data;
+ORDER BY date_of_conclusion;
 
 --15. Выведите список клиентов, заключивших наибольшее количество договоров.
 SELECT client_id, name, surname, address, phone_number, email
