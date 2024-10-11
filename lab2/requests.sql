@@ -111,7 +111,8 @@ WHERE type = 'Депозиты';
 
 --10. Удалите записи о договорах, которые были заключены более года назад.
 DELETE FROM Contracts
-WHERE data < DATE_SUB(CURDATE(), INTERVAL 1 YEAR);
+WHERE date_of_conclusion < (CURRENT_DATE - INTERVAL '1 year');
+
 
 --11. Найдите договора по кредитам с определёнными условиями.!!!!!!!!
 SELECT contract_id, client_id, product_id, data, total_sum
