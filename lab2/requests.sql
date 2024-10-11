@@ -64,15 +64,13 @@ INSERT INTO Contracts (contract_id, client_id, product_id, data, total_sum) VALU
 
 -- Задания
 -- 3. Вывести список всех клиентов, отсортированных по сумме заключённых договоров.
-SELECT client_id, name, surname, address, phone_number, email, (SELECT SUM(total_sum) FROM Contracts WHERE Contracts.client_id = Clients.client_id) AS total_sum
-FROM Clients
-ORDER BY total_sum DESC;
+--можно решить двумя селектами либо джоином
 
 -- 4. Найти клиентов, которые заключили договора в определённый период времени.
-SELECT DISTINCT client_id, name, surname, address, phone_number, email
+SELECT DISTINCT name, surname, address, phone_number, email
 FROM Clients, Contracts
 WHERE Clients.client_id = Contracts.client_id
-AND дата заключения BETWEEN '2023-01-01' AND '2023-12-31';
+AND contracts.date_of_conclusion BETWEEN '2023-01-01' AND '2023-12-31';
 
 --5. Вывести депозиты с условиями, попадающими в указанные границы.
 SELECT product_id, type, conditions, bet
