@@ -39,6 +39,19 @@ CREATE TABLE Contracts (
     ALTER COLUMN bet TYPE money 
     USING (bet::numeric::money);
 
+    -- Добавление внешнего ключа для таблицы Contracts
+    ALTER TABLE Contracts 
+    ADD CONSTRAINT fk_client
+    FOREIGN KEY (client_id) 
+    REFERENCES Clients(client_id) 
+    ON DELETE CASCADE; -- Удалить договоры, если клиент удалён
+    
+    ALTER TABLE Contracts 
+    ADD CONSTRAINT fk_product
+    FOREIGN KEY (product_id) 
+    REFERENCES FinancialProducts(product_id) 
+    ON DELETE CASCADE; -- Удалить договоры, если продукт удалён
+
 
 
 
