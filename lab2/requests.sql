@@ -130,7 +130,7 @@ ORDER BY date_of_conclusion
 LIMIT 5 OFFSET 2;
 
 
---13. Подсчитайте среднюю сумму депозитов для каждого клиента и запишите результаты.!!!!!
+--13. Подсчитайте среднюю сумму депозитов для каждого клиента и запишите результаты.
 SELECT client_id, AVG(total_sum::numeric) AS average_deposit
 FROM Contracts
 GROUP BY client_id;
