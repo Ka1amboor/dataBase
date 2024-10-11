@@ -1,0 +1,32 @@
+@startuml
+entity "Клиенты" as Clients {
+  **+ client_id : int [PK]**
+  +
+  **+ имя : varchar**
+  **+ фамилия : varchar**
+  **+ адрес : varchar**
+  **+ телефон : varchar**
+  **+ email : varchar**
+}
+
+entity "Финансовые продукты" as FinancialProducts {
+  **+ product_id : int [PK]**
+  +
+  **+ тип : varchar [Уникальный(Кредиты, Депозиты, Страхование)]**
+  **+ условия : text**
+  **+ ставка : float**
+}
+
+entity "Договоры" as Contracts {
+  **+ contract_id : int [PK]**
+  +
+  **+ client_id : int [FK]**
+  **+ product_id : int [FK]**
+  **+ дата заключения : date**
+  **+ сумма : float**
+}
+
+Clients ||--o{ Contracts : "1 : M"
+FinancialProducts ||--o{ Contracts : "1 : M"
+
+@enduml
