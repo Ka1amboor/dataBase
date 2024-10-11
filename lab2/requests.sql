@@ -124,10 +124,11 @@ WHERE product_id IN (
 );
 
 --12. Выведите первые пять записей о заключённых договорах, пропустив несколько первых записей.
-SELECT contract_id, client_id, product_id, дата заключения, total_sum
+SELECT contract_id, client_id, product_id, date_of_conclusion , total_sum
 FROM Contracts
-ORDER BY data
+ORDER BY date_of_conclusion 
 LIMIT 5 OFFSET 2;
+
 
 --13. Подсчитайте среднюю сумму депозитов для каждого клиента и запишите результаты.!!!!!
 CREATE TABLE AverageDeposits AS
