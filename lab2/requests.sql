@@ -142,15 +142,7 @@ FROM Contracts
 ORDER BY date_of_conclusion;
 
 --15. Выведите список клиентов, заключивших наибольшее количество договоров.
-SELECT client_id, name, surname, address, phone_number, email
-FROM Clients
-WHERE client_id IN (
-    SELECT client_id
-    FROM Contracts
-    GROUP BY client_id
-    ORDER BY COUNT(*) DESC
-    LIMIT 1
-);
+---
 
 
 
