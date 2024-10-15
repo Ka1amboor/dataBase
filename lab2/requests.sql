@@ -171,7 +171,8 @@ FROM Contracts
 ORDER BY date_of_conclusion;
 
 --15. Выведите список клиентов, заключивших наибольшее количество договоров.
----
+--- count(ct.contract_id) и join contract с client группируем по id name surname и сортируем
+-- по количеству договоров
 
 
 
