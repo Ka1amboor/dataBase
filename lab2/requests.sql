@@ -105,11 +105,13 @@ INSERT INTO Contracts (contract_id, client_id, product_id, date_of_conclusion, t
 
 -- Задания
 -- 3. Вывести список всех клиентов, отсортированных по сумме заключённых договоров.
---можно решить двумя селектами либо джоином
+--можно реализовать с помощью join для клиентов и договоров, а затем агрегирующей 
+--функцией sum по каждому клиенту, затем группируем результаты по идентификатору клиента 
+--имени и фамилии и сортируем по убыванию
 
 -- 4. Найти клиентов, которые заключили договора в определённый период времени.
 SELECT DISTINCT name, surname, address, phone_number, email
-FROM Clients, Contracts
+FROM Clients, Contracts -- по сути объединение без явного использования join
 WHERE Clients.client_id = Contracts.client_id
 AND contracts.date_of_conclusion BETWEEN '2023-01-01' AND '2023-12-31';
 
