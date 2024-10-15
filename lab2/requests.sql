@@ -131,7 +131,7 @@ WHERE type = 'Депозиты' AND bet::numeric BETWEEN 4.0 AND 6.0;
 
 --8.Выведите клиентов, которые заключили договора на сумму, превышающую определённое значение.
 SELECT c.client_id, c.name, c.surname, c.address, c.phone_number, c.email
-FROM Clients c, Contracts ct
+FROM Clients c, Contracts ct -- объединение без явного join
 WHERE c.client_id = ct.client_id
 GROUP BY c.client_id, c.name, c.surname, c.address, c.phone_number, c.email
 HAVING SUM(ct.total_sum::numeric) > 1000000;
