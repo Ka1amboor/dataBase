@@ -110,7 +110,8 @@ INSERT INTO Contracts (contract_id, client_id, product_id, date_of_conclusion, t
 --имени и фамилии и сортируем по убыванию
 
 
---пример решения всех задач без join и подзапросов:
+
+--запросы, которые не были выполнены решаются вот так:
 select client_id, sum(total_sum), count(client_id) as count_client from contracts c group by client_id order by count_client 
    
 
