@@ -1,3 +1,8 @@
+
+--Вывести для каждой компании средний возраст всех сотрудников, 
+--количество женщин и мужчин и распределение по должностям
+
+--join
 SELECT 
     c.name AS company_name,
     AVG(EXTRACT(YEAR FROM AGE(CURRENT_DATE, e.date_of_birth))) AS average_age,
@@ -17,7 +22,7 @@ ORDER BY
     c.name, p.name;
 
 
-
+--подзапросы
 SELECT 
     c.name AS company_name,
     (SELECT AVG(EXTRACT(YEAR FROM AGE(CURRENT_DATE, e1.date_of_birth)))
