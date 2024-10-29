@@ -99,3 +99,7 @@ SELECT
      ) AS frequent_direction) AS frequent_trip_direction
 FROM 
     employees e;
+
+
+--Вывести рейтинг компании по средней продолжительности работы сотрудников.
+--- я забыла вставить в таблицу начало работы ;(
