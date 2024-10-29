@@ -103,3 +103,110 @@ FROM
 
 --Вывести рейтинг компании по средней продолжительности работы сотрудников.
 --- я забыла вставить в таблицу начало работы ;(
+
+
+
+
+
+
+--Для каждой компании вывести интервал, когда больше всего работников находилось в отпуске, 
+--а также количество сотрудников в отпуске и на работе в этот момент.
+--join
+WITH vacation_intervals AS (
+    SELECT
+        e.company_id,
+        v.date_of_start,
+        v.date_of_end,
+        COUNT(e.employee_id) AS num_on_vacation
+    FROM 
+        employees e
+    JOIN 
+        vacations v ON e.employee_id = v.employee_id
+    GROUP BY 
+        e.company_id, v.date_of_start, v.date_of_end
+),
+max_vacation_intervals AS (
+    SELECT 
+        vi.company_id,
+        MAX(vi.num_on_vacation) AS max_on_vacation
+    FROM 
+        vacation_intervals vi
+    GROUP BY 
+        vi.company_id
+)
+SELECT 
+    c.name AS company_name,
+    vi.date_of_start,
+    vi.date_of_end,
+    vi.num_on_vacation,
+    COUNT(e.employee_id) - vi.num_on_vacation AS num_not_on_vacation
+FROM 
+    vacation_intervals vi
+JOIN 
+    max_vacation_intervals mv ON vi.company_id = mv.company_id AND vi.num_on_vacation = mv.max_on_vacation
+JOIN 
+    companies c ON vi.company_id = c.company_id
+JOIN 
+    employees e ON e.company_id = c.company_id
+GROUP BY 
+    c.name, vi.date_of_start, vi.date_of_end, vi.num_on_vacation
+ORDER BY 
+    c.name;
+
+
+--select
+SELECT 
+    c.name AS company_name,
+    vi.date_of_start,
+    vi.date_of_end,
+    vi.num_on_vacation,
+    total_employees.num_employees - vi.num_on_vacation AS num_not_on_vacation
+FROM 
+    (
+        SELECT
+            e.company_id,
+            v.date_of_start,
+            v.date_of_end,
+            COUNT(e.employee_id) AS num_on_vacation
+        FROM 
+            employees e
+        JOIN 
+            vacations v ON e.employee_id = v.employee_id
+        GROUP BY 
+            e.company_id, v.date_of_start, v.date_of_end
+    ) AS vi
+JOIN 
+    (
+        SELECT 
+            company_id,
+            MAX(num_on_vacation) AS max_on_vacation
+        FROM 
+            (
+                SELECT
+                    e.company_id,
+                    COUNT(e.employee_id) AS num_on_vacation
+                FROM 
+                    employees e
+                JOIN 
+                    vacations v ON e.employee_id = v.employee_id
+                GROUP BY 
+                    e.company_id, v.date_of_start, v.date_of_end
+            ) AS inner_vi
+        GROUP BY 
+            company_id
+    ) AS mv ON vi.company_id = mv.company_id AND vi.num_on_vacation = mv.max_on_vacation
+JOIN 
+    companies c ON vi.company_id = c.company_id
+JOIN 
+    (
+        SELECT 
+            company_id,
+            COUNT(employee_id) AS num_employees
+        FROM 
+            employees
+        GROUP BY 
+            company_id
+    ) AS total_employees ON vi.company_id = total_employees.company_id
+ORDER BY 
+    c.name;
+
