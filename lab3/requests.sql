@@ -1,74 +1,78 @@
-CREATE TABLE Companies(
-    company_id INT PRIMARY KEY,
-    name VARCHAR(100) NOT NULL
-);
+create table companies(
+company_id int primary key,
+name varchar(255) not null);
 
-CREATE TABLE Positions(
-    position_id INT PRIMARY KEY,
-    name VARCHAR(100) NOT NULL
-);
+create table positions(
+position_id int primary key,
+name varchar(255) not null);
 
-CREATE TABLE Employees(
-    employee_id INT PRIMARY KEY,
-    name VARCHAR(100) NOT NULL,
-    surname VARCHAR(100) NOT NULL,
-    date_of_birth DATE NOT NULL,
-    gender VARCHAR(100) NOT NULL CHECK (gender IN ('м', 'ж')),
-    position_id INT REFERENCES Positions(position_id),
-    company_id BIGINT REFERENCES Companies(company_id)
-);
+create table employees(
+ employee_id int primary key,
+ name varchar(255) not null,
+ surname varchar(255) not null,
+ date_of_birth date not null,
+ gender varchar(255) not null check (gender in ('ж','м')),
+ position_id INT REFERENCES Positions(position_id),
+ company_id INT REFERENCES Companies(company_id));
 
-CREATE TABLE Vacations(
-    vacation_id INT PRIMARY KEY,
-    employee_id INT REFERENCES Employees(employee_id),
-    start_date DATE NOT NULL,
-    end_date DATE NOT NULL
-);
+create table skills(
+skills_id int primary key,
+name varchar(255) not null,
+employee_id int references Employees(employee_id));
 
-CREATE TABLE Business_trips(
-    buissness_trip_id INT PRIMARY KEY,
-    employee_id BIGINT REFERENCES Employees(employee_id),
-    start_date DATE NOT NULL,
-    end_date DATE NOT NULL,
-    direction VARCHAR(100) NOT NULL
-);
+create table vacations(
+vacation_id int primary key,
+date_of_start date not null,
+date_of_end date not null,
+employee_id int references employees(employee_id));
 
-CREATE TABLE Skills(
-    skill_id INT PRIMARY KEY,
-    name VARCHAR(100) NOT NULL
-);
-
-
-INSERT INTO Companies (company_id, name)
-VALUES (1, 'Company A'), (2, 'Company B'), (3, 'Company C');
-
-
-INSERT INTO Positions (position_id, name)
-VALUES (1, 'Manager'), (2, 'Developer'), (3, 'Designer');
-
-INSERT INTO Employees (employee_id, name, surname, date_of_birth, gender, position_id, company_id)
-VALUES 
-  (1, 'John', 'Doe', '1990-01-01', 'м', 1, 1),
-  (2, 'Jane', 'Smith', '1992-05-10', 'ж', 2, 2),
-  (3, 'Mark', 'Johnson', '1985-12-15', 'м', 3, 2);
-  
-INSERT INTO Vacations (vacation_id, employee_id, start_date, end_date)
-VALUES 
-  (1, 1, '2022-07-01', '2022-07-15'),
-  (2, 2, '2022-08-15', '2022-08-31'),
-  (3, 3, '2022-06-10', '2022-06-20');
-
-INSERT INTO Business_trips (buissness_trip_id, employee_id, start_date, end_date, direction)
-VALUES 
-  (1, 1, '2022-04-01', '2022-04-07', 'New York'),
-  (2, 2, '2022-03-15', '2022-03-20', 'London'),
-  (3, 3, '2022-05-10', '2022-05-15', 'Tokyo');
-
- INSERT INTO Skills (skill_id, name)
-VALUES 
-  (1, 'C'), 
-  (2, 'C++'), 
-  (3, 'Java');
+create table business_trips(
+business_trip_id int primary key,
+date_of_start date not null,
+date_of_end date not null,
+direction varchar(255) not null,
+employee_id int references employees(employee_id));
  
- 
+
+INSERT INTO companies (company_id, name) VALUES
+(1, 'yandex'),
+(2, 'sber'),
+(3, 'vk'),
+(4, 'google');
+
+INSERT INTO positions (position_id, name) VALUES
+(1, 'middle'),
+(2, 'senior'),
+(3, 'june'),
+(4, 'HR_Specialist');
+
+INSERT INTO employees (employee_id, name, surname, date_of_birth, gender, position_id, company_id) VALUES
+(1, 'Alice', 'Smith', '1988-05-12', 'ж', 1, 1),
+(2, 'John', 'Doe', '1990-07-23', 'м', 2, 2),
+(3, 'Emma', 'Johnson', '1993-11-11', 'ж', 3, 3),
+(4, 'Michael', 'Brown', '1985-02-17', 'м', 1, 4),
+(5, 'Olivia', 'Davis', '1991-04-22', 'ж', 4, 1);
+
+INSERT INTO skills (skills_id, name, employee_id) VALUES
+(1, 'Java', 1),
+(2, 'C++', 2),
+(3, 'C', 3),
+(4, 'Python', 1),
+(5, 'data_base', 5),
+(6, 'Communication', 4);
+
+INSERT INTO vacations (vacation_id, date_of_start, date_of_end, employee_id) VALUES
+(1, '2023-06-15', '2023-06-25', 1),
+(2, '2023-08-01', '2023-08-10', 2),
+(3, '2023-07-10', '2023-07-20', 3),
+(4, '2023-12-01', '2023-12-15', 4),
+(5, '2023-09-25', '2023-10-05', 5);
+
+INSERT INTO business_trips (business_trip_id, date_of_start, date_of_end, direction, employee_id) VALUES
+(1, '2023-05-01', '2023-05-07', 'New York', 1),
+(2, '2023-06-10', '2023-06-15', 'London', 3),
+(3, '2023-08-05', '2023-08-12', 'Tokyo', 2),
+(4, '2023-11-20', '2023-11-27', 'Sydney', 4),
+(5, '2023-07-25', '2023-08-02', 'Berlin', 5);
+
 
