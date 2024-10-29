@@ -44,3 +44,58 @@ JOIN
     positions p ON p.position_id IN (SELECT position_id FROM employees WHERE company_id = c.company_id)
 ORDER BY 
     c.name, p.name;
+
+--Для каждого сотрудника вывести максимальное и среднее время отпуска, 
+--а также максимальное и среднее время командировок. 
+--Также нужно вывести наиболее частое направление для командировок.
+--join
+SELECT 
+    e.name AS employee_name,
+    e.surname AS employee_surname,
+    COALESCE(MAX(vac.date_of_end - vac.date_of_start), 0) AS max_vacation_days,
+    COALESCE(AVG(vac.date_of_end - vac.date_of_start), 0) AS avg_vacation_days,
+    COALESCE(MAX(bt.date_of_end - bt.date_of_start), 0) AS max_trip_days,
+    COALESCE(AVG(bt.date_of_end - bt.date_of_start), 0) AS avg_trip_days,
+    COALESCE(
+        (SELECT bt1.direction
+         FROM business_trips bt1
+         WHERE bt1.employee_id = e.employee_id
+         GROUP BY bt1.direction
+         ORDER BY COUNT(bt1.direction) DESC
+         LIMIT 1), 'Нет') AS frequent_trip_direction
+FROM 
+    employees e
+LEFT JOIN 
+    vacations vac ON e.employee_id = vac.employee_id
+LEFT JOIN 
+    business_trips bt ON e.employee_id = bt.employee_id
+GROUP BY 
+    e.employee_id;
+
+--select
+SELECT 
+    e.name AS employee_name,
+    e.surname AS employee_surname,
+    (SELECT COALESCE(MAX(vac.date_of_end - vac.date_of_start), 0)
+     FROM vacations vac
+     WHERE vac.employee_id = e.employee_id) AS max_vacation_days,
+    (SELECT COALESCE(AVG(vac.date_of_end - vac.date_of_start), 0)
+     FROM vacations vac
+     WHERE vac.employee_id = e.employee_id) AS avg_vacation_days,
+    (SELECT COALESCE(MAX(bt.date_of_end - bt.date_of_start), 0)
+     FROM business_trips bt
+     WHERE bt.employee_id = e.employee_id) AS max_trip_days,
+    (SELECT COALESCE(AVG(bt.date_of_end - bt.date_of_start), 0)
+     FROM business_trips bt
+     WHERE bt.employee_id = e.employee_id) AS avg_trip_days,
+    (SELECT COALESCE(direction, 'Нет')
+     FROM (
+         SELECT bt1.direction
+         FROM business_trips bt1
+         WHERE bt1.employee_id = e.employee_id
+         GROUP BY bt1.direction
+         ORDER BY COUNT(bt1.direction) DESC
+         LIMIT 1
+     ) AS frequent_direction) AS frequent_trip_direction
+FROM 
+    employees e;
