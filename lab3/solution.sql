@@ -117,6 +117,27 @@ GROUP BY
 ORDER BY 
     average_work_duration_days DESC;
 
+--подзапрос
+SELECT 
+    name AS company_name,
+    (SELECT 
+        AVG(
+            COALESCE(
+                (COALESCE(e.date_of_end_work, CURRENT_DATE) - e.date_of_start_work),
+                0
+            )
+        )
+     FROM 
+        employees e
+     WHERE 
+        e.company_id = c.company_id
+    ) AS average_work_duration_days
+FROM 
+    companies c
+ORDER BY 
+    average_work_duration_days DESC;
+
+
 
 
 
