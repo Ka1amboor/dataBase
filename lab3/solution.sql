@@ -8,8 +8,7 @@ SELECT
     AVG(EXTRACT(YEAR FROM AGE(CURRENT_DATE, e.date_of_birth))) AS average_age,
     COUNT(CASE WHEN e.gender = 'ж' THEN 1 END) AS female_count,
     COUNT(CASE WHEN e.gender = 'м' THEN 1 END) AS male_count,
-    p.name AS position_name,
-    COUNT(e.employee_id) AS position_count
+    p.name AS position_name
 FROM 
     companies c
 JOIN 
