@@ -99,8 +99,23 @@ FROM
 
 
 --Вывести рейтинг компании по средней продолжительности работы сотрудников.
---- я забыла вставить в таблицу начало работы ;(
-
+--- join
+SELECT 
+    c.name AS company_name, 
+    AVG(
+        COALESCE(
+            (COALESCE(e.date_of_end_work, CURRENT_DATE) - e.date_of_start_work), 
+            0
+        )
+    ) AS average_work_duration_days
+FROM 
+    companies c
+JOIN 
+    employees e ON c.company_id = e.company_id
+GROUP BY 
+    c.name
+ORDER BY 
+    average_work_duration_days DESC;
 
 
 
