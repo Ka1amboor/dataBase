@@ -33,16 +33,14 @@ SELECT
     (SELECT COUNT(*)
      FROM employees e3
      WHERE e3.company_id = c.company_id AND e3.gender = 'м') AS male_count,
-    p.name AS position_name,
-    (SELECT COUNT(*)
-     FROM employees e4
-     WHERE e4.company_id = c.company_id AND e4.position_id = p.position_id) AS position_count
+    p.name AS position_name
 FROM 
     companies c
 JOIN 
     positions p ON p.position_id IN (SELECT position_id FROM employees WHERE company_id = c.company_id)
 ORDER BY 
     c.name, p.name;
+
 
 --Для каждого сотрудника вывести максимальное и среднее время отпуска, 
 --а также максимальное и среднее время командировок. 
