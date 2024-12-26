@@ -1,0 +1,40 @@
+ @startuml
+entity "Flights" {
+  * FlightID : bigint
+  * Destination : String
+  * DepartureTime : Timestamp
+  * Status : String
+}
+
+entity "Passengers" {
+  * PassengerID : bigint
+  * Name : String
+  * Email : String
+  * BaggageWeight : Float
+}
+
+entity "Tickets" {
+  * TicketID : bigint
+  * PassengerID : bigint
+  * FlightID : bigint
+  * Class : String
+  * Price : money
+}
+
+entity "Logs" {
+  * LogID : bigint
+  * Action : String
+  * Timestamp : Timestamp
+  * Details : String
+}
+
+entity "PassengerFlights" {
+  * PassengerID : bigint
+  * FlightID : bigint
+}
+
+Flights ||--o{ Tickets
+Passengers ||--o{ Tickets
+Passengers ||--o{ PassengerFlights
+Flights ||--o{ PassengerFlights
+@enduml
